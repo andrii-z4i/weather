@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var https = require('https');
 app.use(bodyParser.json()); // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
     extended: true
@@ -49,13 +50,11 @@ app.get('/city/:city', function(req, res){
 
     } else {
         var _cityToSearch = req.params.city;
-        console.log(_cityToSearch);
         CityModel.find({city: {$elemMatch: {$eq: _cityToSearch}}}, function(err, result){
             if (err) {
                 res.end(JSON.stringify({error: err}));
             }
             else {
-                console.log(result);
                 res.end(JSON.stringify({results: result}));
             }
         });
@@ -64,9 +63,31 @@ app.get('/city/:city', function(req, res){
     res.end(JSON.stringify(object));
 });
 
-app.get('forecast/:attitude/:latitude', function(req, res){
-
-    res.end({temperature: 22});
+app.get('/forecast/:attitude/:latitude', function(req, response){
+    var forecastRequestOptions = {
+        hostname: 'api.forecast.io',
+        port: 443,
+        path: '/forecast/74eee671c24e24a04f85929168194a9e/',
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    };
+    forecastRequestOptions.path += req.params.attitude + ',' + req.params.latitude;
+    var req = https.request(forecastRequestOptions, function(res) {
+          res.setEncoding('utf8');
+          var fullBody = '';
+          res.on('data', function (chunk) {
+            fullBody += chunk;
+          });
+          res.on('end', function() {
+            response.end(fullBody);
+          })
+    });
+    req.on('error', function(e) {
+        response.end(JSON.stringify({error: e}));
+    });
+    req.end();
 });
 
 var server = app.listen(8081, function() {
