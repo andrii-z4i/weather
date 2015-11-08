@@ -5,7 +5,7 @@ import sys
 # 1020098   Benoni  Benoni  Benoni,Бенони,Беноні    -26.18848   28.32078    P   PPL ZA      06  EKU EKU     605344      1641    Africa/Johannesburg 2012-07-12
 def parse_line(line):
     data = line.split('\t')
-    return [el for el in data if el != '']
+    return data 
 
 def parse_cities(line):
     data = line.split(',')
@@ -35,8 +35,11 @@ if __name__ == '__main__':
 
     for i in read_file(input_filename):
         parsed_line = parse_line(i)
+        parsed_cities = parse_cities(parsed_line[3]) 
+        parsed_cities.append(parsed_line[1])  # add name
+        parsed_cities.append(parsed_line[2])  # add aciiname
         city_obj = {
-            'city': parse_cities(parsed_line[3]),
+            'city': parsed_cities,
             'attitude': parsed_line[4],
             'latitude': parsed_line[5]
         }

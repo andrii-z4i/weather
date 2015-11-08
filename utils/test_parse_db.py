@@ -40,12 +40,16 @@ class TestParseLine(unittest.TestCase):
             "P",
             "PPL",
             "ZA",
+            "",
             "06",  
             "EKU", 
             "EKU",     
+            "",
             "605344",      
+            "",
             "1641",    
             "Africa/Johannesburg",
             "2012-07-12"
         ]
+        self.assertEqual(len(lines), 19)
         self.assertEqual(lines, expected_lines)
