@@ -1,27 +1,35 @@
-var weatherApp = angular.module('weatherApp', []);
+var weatherApp = angular.module('weatherApp', ['ngResource']);
 
-weatherApp.config(function(){
-    return {
-        apiUrl: 'https://api.forecast.io/forecast/',
-        apiAppId: '74eee671c24e24a04f85929168194a9e'
-    }
-});
+weatherApp.controller('WeatherController', ['$scope', '$http', '$resource', function($scope, $http, $resource){
+    $scope.name = "WeatherApp"; 
 
-weatherApp.controller('WeatherController', ['$scope', '$http', function($scope, $http){
-   $scope.name = "WeatherApp"; 
+    $scope.currentCity = "Prague";
 
-   $scope.currentCity = "Pargue";
+    $scope.cityList = [];
 
-   $scope.cityList = [];
+    $scope.forecast = {};
 
-   $scope.currentTemprature = "0";
+    $scope.cityRequest = $resource('http://127.0.0.1:8081/city/:cityName', {cityName: '@cityName'});
 
-   $scope.loadWeather = function() {
+    $scope.forecastRequest = $resource('http://127.0.0.1:8081/forecast/:attitude/:latitude', {attitude: '@attitude', latitude: '@latitude'});
 
-   };
+    $scope.loadWeather = function(cityObject) {
+        $scope.currentCity = cityObject.city[0];
+        $scope.forecastRequest.get({attitude: cityObject.attitude, latitude: cityObject.latitude}, function(forecast){
+            $scope.forecast = forecast;
+        });
+    };
 
-   $scope.loadCityList = function() {
+    $scope.loadCityList = function(cityToSearch) {
+        $scope.cityRequest.get({cityName: cityToSearch}, function(cities){
+            if (cities.results !== undefined) {
+                $scope.cityList = cities.results;
+            }
+            else {
+                $scope.cityList = [];
+            }
+        });
+    };
 
-   };
 
 }]);
