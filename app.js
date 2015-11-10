@@ -7,14 +7,13 @@ weatherApp.controller('WeatherController', ['$scope', '$http', '$resource', func
 
     $scope.cityList = [];
 
-    $scope.forecast = {};
+    $scope.forecast = null;
 
     $scope.cityRequest = $resource('http://127.0.0.1:8081/city/:cityName', {cityName: '@cityName'});
 
     $scope.forecastRequest = $resource('http://127.0.0.1:8081/forecast/:attitude/:latitude', {attitude: '@attitude', latitude: '@latitude'});
 
     $scope.loadWeather = function(cityObject) {
-        $scope.currentCity = cityObject.city[0];
         $scope.forecastRequest.get({attitude: cityObject.attitude, latitude: cityObject.latitude}, function(forecast){
             $scope.forecast = forecast;
         });

@@ -28,7 +28,7 @@ var CityModel = mongoose.model('City', CitySchema);
 
 app.use(function(req, res, next) {
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8888');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost');
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     // Request headers you wish to allow
@@ -50,7 +50,8 @@ app.get('/city/:city', function(req, res){
 
     } else {
         var _cityToSearch = req.params.city;
-        CityModel.find({city: {$elemMatch: {$eq: _cityToSearch}}}, function(err, result){
+        console.log(_cityToSearch);
+        CityModel.find({city: {$elemMatch: {$gte: _cityToSearch, $lte: _cityToSearch}}}, function(err, result){
             if (err) {
                 res.end(JSON.stringify({error: err}));
             }
