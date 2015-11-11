@@ -8,8 +8,9 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
 
-<script src="//code.angularjs.org/1.4.7/angular.js"></script>
+<script src="/bower_components/angular/angular.js"></script>
 <script src="//code.angularjs.org/1.4.7/angular-resource.js"></script>
+<script src="/bower_components/angular-bootstrap/ui-bootstrap.js"></script>
 <script type="text/javascript" src="app.js"></script>
 <div ng-app="weatherApp">
     <div ng-controller="WeatherController">
@@ -27,7 +28,15 @@
         </div>
         <br />
         <div ng-show="forecast">
-            {{forecast}}
+            <hourly-block info="forecast.currently"></hourly-block>
+
+            <br />
+            <div style="height: 305px">
+                <uib-carousel interval="1000" no-wrap="false" template-url="carousel.html">
+                    <uib-slide ng-repeat="data in forecast.hourly.data" template-url="slide.html">
+                        <hourly-block info="data" ></hourly-block>
+                    </uib-slide>
+                </uib-carousel>
         </div>
     </div>
 

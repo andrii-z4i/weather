@@ -1,4 +1,4 @@
-var weatherApp = angular.module('weatherApp', ['ngResource']);
+var weatherApp = angular.module('weatherApp', ['ngResource', 'ui.bootstrap']);
 
 weatherApp.controller('WeatherController', ['$scope', '$http', '$resource', function($scope, $http, $resource){
     $scope.name = "WeatherApp"; 
@@ -32,3 +32,21 @@ weatherApp.controller('WeatherController', ['$scope', '$http', '$resource', func
 
 
 }]);
+
+weatherApp.filter('temperature', function(){
+    return function(input, toSystem){
+        if (toSystem === 'celsium') {
+            return Math.round((input - 32) / 1.8);
+        }
+        return input;
+    }
+});
+
+weatherApp.directive('hourlyBlock', function(){
+    return {
+        templateUrl: 'directives/weather-block.html',
+        scope: {
+            weather: '=info'
+        }
+    }
+});

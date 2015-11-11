@@ -1,5 +1,12 @@
 ![High level overview](docs/WeatherApp.png)
 
+Frontend part
+=============
+
+* install `bower`
+* install `bower install angular-bootstrap`
+
+
 Weather REST API
 ================
 
