@@ -36,7 +36,7 @@
                 </div>
                 <div style="height: 305px" class="col-sm-6 col-md-4">
                     <uib-carousel interval="3000" no-wrap="false">
-                        <uib-slide ng-repeat="data in forecast.hourly.data">
+                        <uib-slide ng-repeat="data in forecast.hourly.data" active="data.active">
                             <hourly-block info="data" block-index="{{ $index + 1}}"></hourly-block>
                         </uib-slide>
                     </uib-carousel>

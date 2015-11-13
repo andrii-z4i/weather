@@ -7,7 +7,7 @@ weatherApp.controller('WeatherController', ['$scope', '$http', '$resource', func
 
     $scope.cityList = [];
 
-    $scope.forecast = fakeData;
+    $scope.forecast = null;
 
     $scope.cityRequest = $resource('http://127.0.0.1:8081/city/:cityName', {cityName: '@cityName'});
 
@@ -16,11 +16,13 @@ weatherApp.controller('WeatherController', ['$scope', '$http', '$resource', func
     $scope.loadWeather = function(cityObject) {
         $scope.forecastRequest.get({attitude: cityObject.attitude, latitude: cityObject.latitude}, function(forecast){
             $scope.forecast = forecast;
+            $scope.cityList = [];
         });
     };
 
     $scope.loadCityList = function(cityToSearch) {
         $scope.cityRequest.get({cityName: cityToSearch}, function(cities){
+            $scope.forecast = null;
             if (cities.results !== undefined) {
                 $scope.cityList = cities.results;
             }
