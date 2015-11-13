@@ -1,0 +1,22 @@
+<div class="panel panel-default">
+    <div class="panel-heading text-center">{{ weather.time * 1000 | date:"HH:mm @ dd/MM/yyyy" }} </div>
+    <div class="panel-body">
+        <div class="text-center">{{ weather.summary}}</div>
+        <div class="text-center">
+            <canvas id="icon1" width="128" height="128">{{weather.icon | icon}}</canvas>
+        </div>
+        <!-- <div>{{ weather.precipIntensity}} </div>
+        <div>{{ weather.precipProbability}} </div>
+        <div>{{ weather.precipType}} </div> -->
+        <div class="text-center">{{ weather.temperature | temperature:"celsium" }} ˚C</div>
+        <div class="text-center">Feels like {{ weather.apparentTemperature | temperature:"celsium"}} ˚C</div>
+        <!-- <div>{{ weather.dewPoint}} </div> -->
+        <div class="text-center">Humidity {{ weather.humidity * 100}} % </div>
+        <div class="text-center">Wind {{ weather.windSpeed | km_h }} km/h</div>
+        <!-- <div>{{ weather.windBearing}} </div>-->
+        <!-- <div>{{ weather.cloudCover}} </div>-->
+        <div class="text-center">Pressure {{ weather.pressure}} mb </div>
+        <!-- <div>{{ weather.ozone}} </div> -->
+    </div>
+    <hr />
+</div>

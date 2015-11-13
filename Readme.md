@@ -4,7 +4,7 @@ Frontend part
 =============
 
 * install `bower`
-* install `bower install angular-bootstrap`
+* install `bower install angular-bootstrap bootstrap`
 
 
 Weather REST API
