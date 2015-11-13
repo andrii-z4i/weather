@@ -1,4 +1,4 @@
-var weatherApp = angular.module('weatherApp', ['ngResource', 'ui.bootstrap']);
+var weatherApp = angular.module('weatherApp', ['ngResource', 'ngAnimate', 'ui.bootstrap']);
 
 weatherApp.controller('WeatherController', ['$scope', '$http', '$resource', function($scope, $http, $resource){
     $scope.name = "WeatherApp"; 
@@ -33,9 +33,9 @@ weatherApp.controller('WeatherController', ['$scope', '$http', '$resource', func
 }]);
 
 weatherApp.filter('icon', function(){
-    return function(input) {
+    return function(input, icon_id) {
         // canvas
-        var skycons = new Skycons({"color": "blue"});
+        var skycons = new Skycons({"color": "gray"});
         // on Android, a nasty hack is needed: {"resizeClear": true}
         var skycons_id = Skycons.SLEET;
         switch(input){
@@ -73,9 +73,9 @@ weatherApp.filter('icon', function(){
                 skycons_id = Skycons.SLEET;
                 break;
         }
-
-        skycons.add("icon1", skycons_id);
-        skycons.play();
+        console.log(icon_id + ' ' + Date.now());
+        skycons.add(icon_id, skycons_id);
+        skycons.play(); 
     }
 });
 
@@ -98,7 +98,18 @@ weatherApp.directive('hourlyBlock', function(){
     return {
         templateUrl: 'templates/directives/weather-block.html',
         scope: {
-            weather: '=info'
+            weather: '=info',
+            blockIndex: '@blockIndex'
+        }
+    }
+});
+
+weatherApp.directive('dailyBlock', function(){
+    return {
+        templateUrl: 'templates/directives/weather-block-daily.html',
+        scope: {
+            weather: '=info',
+            blockIndex: '@blockIndex'
         }
     }
 });
