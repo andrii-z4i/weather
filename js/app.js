@@ -1,3 +1,4 @@
+/* global Skycons */
 var weatherApp = angular.module('weatherApp', ['ngResource', 'ngAnimate', 'ui.bootstrap']);
 
 weatherApp.controller('WeatherController', ['$scope', '$http', '$resource', function($scope, $http, $resource){
@@ -39,42 +40,7 @@ weatherApp.filter('icon', function(){
         // canvas
         var skycons = new Skycons({"color": "gray"});
         // on Android, a nasty hack is needed: {"resizeClear": true}
-        var skycons_id = Skycons.SLEET;
-        switch(input){
-            case "clear-day":
-            skycons_id = Skycons.CLEAR_DAY;
-            break;
-        case "clear-night":
-            skycons_id = Skycons.CLEAR_NIGHT;
-            break;
-        case "partly-cloudy-day":
-            skycons_id = Skycons.PARTLY_CLOUDY_DAY;
-            break;
-        case "partly-cloudy-night":
-            skycons_id = Skycons.PARTLY_CLOUDY_NIGHT;
-            break;
-        case "cloudy":
-            skycons_id = Skycons.CLOUDY;
-            break;
-        case "rain":
-            skycons_id = Skycons.RAIN;
-            break;
-        case "sleet":
-            skycons_id = Skycons.SLEET;
-            break;
-        case "snow":
-            skycons_id = Skycons.SNOW;
-            break;
-        case "wind":
-            skycons_id = Skycons.WIND;
-            break;
-        case "fog":
-            skycons_id = Skycons.FOG;
-            break;
-        default:
-                skycons_id = Skycons.SLEET;
-                break;
-        }
+        var skycons_id = input;
         console.log(icon_id + ' ' + Date.now());
         skycons.add(icon_id, skycons_id);
         skycons.play(); 
